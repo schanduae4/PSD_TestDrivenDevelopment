@@ -1,4 +1,4 @@
-version: 2.1
+wversion: 2.1
 
 jobs:
     build_and_push:
@@ -8,6 +8,12 @@ jobs:
             - checkout
             - setup_remote_docker:
                 version: 19.03.13
+            - run:
+                name: install pytest dependency
+                command: pip install pytest
+            - run:
+                name: Run pytest file
+                command: pytest test_sparse_recommender.py 
             - run:
                 name: Docker build
                 command: docker build -t $DOCKERHUB_USERNAME/myapp:${CIRCLE_SHA1} .
